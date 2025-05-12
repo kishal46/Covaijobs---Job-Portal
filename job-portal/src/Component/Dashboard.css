@@ -1,0 +1,175 @@
+/* General container styling */
+.auth-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.auth-form {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Form fields */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-group input[type="file"] {
+  padding: 5px;
+}
+
+/* Skills display styling */
+.skills-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.skill-tag {
+  background-color: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+/* Button styling */
+.auth-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.auth-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  .auth-form {
+    padding: 15px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .auth-title {
+    font-size: 20px;
+  }
+
+  /* Input fields, especially for smaller screens */
+  .form-group input,
+  .form-group select {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  /* Button styling for smaller screens */
+  .auth-btn {
+    padding: 14px;
+    font-size: 18px;
+  }
+}
+
+/* Responsive layout for larger screens: Two-column layout */
+@media (min-width: 769px) {
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  .form-group:nth-child(odd) {
+    flex-basis: 48%; /* Create space for two-column layout */
+    margin-right: 4%;
+  }
+
+  .form-group:nth-child(even) {
+    flex-basis: 48%;
+  }
+
+  .form-group input,
+  .form-group select {
+    font-size: 16px;
+    padding: 12px;
+  }
+}
+
+/* Ensure card has smooth shadows and rounded corners */
+.card {
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+/* Skill badge styling */
+.badge {
+  font-size: 0.9rem;
+  padding: 0.5em 0.8em;
+  border-radius: 20px;
+}
+
+/* Add subtle hover effect to input fields */
+.form-control:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+}
+
+/* File input spacing */
+input[type="file"] {
+  padding: 0.35rem;
+}
+
+/* Save button customization */
+button[type="submit"] {
+  font-size: 1rem;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+button[type="submit"]:hover {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+/* Responsive skill tag area */
+.mt-2 .badge {
+  margin-top: 5px;
+  cursor: default;
+}

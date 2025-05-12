@@ -1,0 +1,26 @@
+.profile-card {
+    max-width: 700px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  input.form-control-sm,
+  button.btn {
+    font-size: 0.95rem;
+  }
+  
+  .badge {
+    padding: 0.45em 0.65em;
+    font-size: 0.75rem;
+    border-radius: 12px;
+  }
+  
+  footer {
+    background-color: #002f4b;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 40px;
+  }
+  

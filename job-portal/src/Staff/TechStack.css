@@ -1,0 +1,24 @@
+.tech-stack-section {
+  background-color: #f8f9fa;
+}
+
+.tech-card {
+  transition: transform 0.3s ease;
+}
+
+.tech-card:hover {
+  transform: translateY(-5px);
+}
+
+.tech-icon {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+.bg-white {
+  background-color: #fff !important;
+}
+
+.shadow-sm {
+  transition: all 0.3s ease-in-out;
+}

@@ -1,0 +1,115 @@
+.about-us-section {
+    background-color: #f2fdf7;
+    padding: 60px 20px;
+    font-family: 'Segoe UI', sans-serif;
+    height: 50vh;
+  }
+  
+  .about-us-container {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+  
+  .about-us-left {
+    flex: 1 1 40%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .about-image {
+    max-width: 100%;
+    border-radius: 50% 50% 0 0 / 40% 40% 0 0;
+    object-fit: cover;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .about-us-right {
+    flex: 1 1 55%;
+  }
+  
+  .about-title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #1a2a6c;
+    position: relative;
+    margin-bottom: 25px;
+  }
+  
+  .gradient-dot {
+    position: absolute;
+    top: -10px;
+    left: -30px;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle at center, #c89bfd, #e0b3ff);
+    border-radius: 50%;
+    z-index: -1;
+  }
+  
+  .about-points {
+    list-style-type: disc;
+    padding-left: 20px;
+    color: #1e3269;
+    font-size: 18px;
+    line-height: 1.8;
+  }
+  
+  .about-points li {
+    margin-bottom: 20px;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .about-us-container {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .about-title {
+      font-size: 28px;
+    }
+  
+    .about-image {
+      width: 80%;
+      border-radius: 40% 40% 0 0 / 30% 30% 0 0;
+    }
+  
+    .gradient-dot {
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  .custom-bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .bullet-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .bullet-icon {
+    width: 12px;
+    height: 12px;
+    margin-top: 8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #a44dff, #cb77ff);
+    flex-shrink: 0;
+  }
+  
+  .bullet-item p {
+    margin: 0;
+    color: #1e3269;
+    font-size: 18px;
+    line-height: 1.6;
+  }
+  
