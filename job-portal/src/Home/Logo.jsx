@@ -1,6 +1,7 @@
 import React from "react";
 import "./LogoSlider.css";
 import RecruitmentProcess from "./Recruit";
+import Footer from "./Footer";
 
 const logos = [
   require("../Images/Logo/Ayutree.png"),
@@ -25,7 +26,9 @@ const LogoSlider = () => {
         ))}
       </div>
     </div>
+
     <RecruitmentProcess/>
+    <Footer/>
     </>
   );
 };

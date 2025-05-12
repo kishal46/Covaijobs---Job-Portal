@@ -94,6 +94,23 @@ button:disabled {
   color: #28a745;
 }
 
+.loading-text {
+  color: #ffa500;
+}
+
+.error-text {
+  color: red;
+}
+
+.success-text {
+  color: green;
+}
+
+.form-submit button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
 .form-submit {
   display: flex;
   justify-content: center;

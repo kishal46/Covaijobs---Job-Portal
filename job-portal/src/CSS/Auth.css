@@ -4,7 +4,24 @@
   align-items: center;
   min-height: 100vh;
   padding: 20px;
+  margin-bottom: -40px;
   background: linear-gradient(135deg, #e0eafc, #cfdef3);
+}
+.password-input-wrapper {
+  position: relative;
+}
+
+.password-input {
+  padding-right: 30px; /* Make room for the icon */
+}
+
+.password-toggle-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 10;
 }
 
 .auth-form {

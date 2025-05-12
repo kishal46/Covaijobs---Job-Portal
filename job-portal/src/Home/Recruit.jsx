@@ -67,7 +67,6 @@ const RecruitmentProcess = () => {
           </svg>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

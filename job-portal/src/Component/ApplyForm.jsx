@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './JobApplication.css'; // Custom CSS file for styling
 
 const JobApplication = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const JobApplication = () => {
     resume: null,
   });
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false); // Added loading state
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
@@ -28,6 +29,18 @@ const JobApplication = () => {
       });
     }
   }, []);
+
+  // Backspace to go back - only when not typing in input
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      const activeTag = document.activeElement.tagName.toLowerCase();
+      if (e.key === 'Backspace' && activeTag !== 'input' && activeTag !== 'textarea') {
+        navigate(-1);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [navigate]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -47,7 +60,6 @@ const JobApplication = () => {
   const handleSubmitApplication = async (e) => {
     e.preventDefault();
 
-    // Validate required fields
     const newErrors = {};
     if (!applicationData.name) newErrors.name = 'Name is required';
     if (!applicationData.email) newErrors.email = 'Email is required';
@@ -66,7 +78,7 @@ const JobApplication = () => {
     formData.append('phone', applicationData.phone);
     formData.append('resume', applicationData.resume);
 
-    setLoading(true); 
+    setLoading(true);
 
     try {
       await axios.post('http://localhost:3001/apply', formData, {
@@ -75,12 +87,12 @@ const JobApplication = () => {
         },
       });
       alert('Application submitted successfully!');
-      navigate('/apply-success'); 
+      navigate('/apply-success');
     } catch (error) {
       console.error('Error submitting application:', error);
       alert('Failed to submit application');
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -88,7 +100,16 @@ const JobApplication = () => {
     <div className="container mt-5 mb-5">
       <div className="row justify-content-center">
         <div className="col-md-8 col-lg-6">
-          <div className="card shadow rounded">
+          <div className="card shadow rounded position-relative">
+            {/* Close Button */}
+            <button
+              className="btn btn-outline-secondary close-btn"
+              onClick={() => navigate(-1)}
+              title="Go Back"
+            >
+              &times;
+            </button>
+
             <div className="card-body">
               <h3 className="text-center mb-4">Apply for Job</h3>
               {jobDetails ? (
@@ -100,6 +121,7 @@ const JobApplication = () => {
               ) : (
                 <p>No job details available</p>
               )}
+
               <form onSubmit={handleSubmitApplication}>
                 <div className="mb-3">
                   <label className="form-label">Full Name</label>
@@ -112,6 +134,7 @@ const JobApplication = () => {
                   />
                   {errors.name && <div className="invalid-feedback">{errors.name}</div>}
                 </div>
+
                 <div className="mb-3">
                   <label className="form-label">Email address</label>
                   <input
@@ -123,6 +146,7 @@ const JobApplication = () => {
                   />
                   {errors.email && <div className="invalid-feedback">{errors.email}</div>}
                 </div>
+
                 <div className="mb-3">
                   <label className="form-label">Phone Number</label>
                   <input
@@ -134,6 +158,7 @@ const JobApplication = () => {
                   />
                   {errors.phone && <div className="invalid-feedback">{errors.phone}</div>}
                 </div>
+
                 <div className="mb-3">
                   <label className="form-label">Upload Resume</label>
                   <input
@@ -141,9 +166,14 @@ const JobApplication = () => {
                     className={`form-control ${errors.resume ? 'is-invalid' : ''}`}
                     onChange={handleResumeUpload}
                   />
-                  {applicationData.resume && <small className="text-success mt-2 d-block">File selected: {applicationData.resume.name}</small>}
+                  {applicationData.resume && (
+                    <small className="text-success mt-2 d-block">
+                      File selected: {applicationData.resume.name}
+                    </small>
+                  )}
                   {errors.resume && <div className="invalid-feedback">{errors.resume}</div>}
                 </div>
+
                 <div className="d-grid">
                   <button
                     type="submit"

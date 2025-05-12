@@ -3,12 +3,16 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "../CSS/Auth.css";
+import Footer from "../Home/Footer";
+
 
 const Login = () => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false); // State to toggle password visibility
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
@@ -42,7 +46,13 @@ const Login = () => {
       });
   };
 
+  // Toggle password visibility
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
   return (
+    <>
     <div className="auth-container">
       <ToastContainer position="top-right" />
       <div className="auth-form">
@@ -60,16 +70,24 @@ const Login = () => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group password-group">
             <label>Password:</label>
-            <input
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="input-field"
-              required
-            />
+            <div className="password-input-wrapper">
+              <input
+                type={passwordVisible ? "text" : "password"} // Toggle between text and password
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="input-field password-input"
+                required
+              />
+              <span
+                className="password-toggle-icon"
+                onClick={togglePasswordVisibility}
+              >
+                {passwordVisible ? <FaEyeSlash /> : <FaEye />} {/* Display Eye Slash or Eye */}
+              </span>
+            </div>
           </div>
 
           <button type="submit" className="auth-btn" disabled={loading}>
@@ -87,6 +105,8 @@ const Login = () => {
         </div>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 

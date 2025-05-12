@@ -16,12 +16,14 @@ import JobApplicationForm from './Component/ApplyForm.jsx';
 import Hire from './Hire/Hire.jsx';
 import ApplySuccess from './Component/ApplySuccess.jsx';
 import About from './pages/About.jsx';
+import Footer from './Home/Footer.jsx';
 
 function App() {
   return (
     <UserContext>
       <BrowserRouter>
         <Navbar />
+        
         <div>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -38,6 +40,7 @@ function App() {
             <Route path='/about' element={<About/>}></Route>
           </Routes>
         </div>
+         
       </BrowserRouter>
     </UserContext>
   );
