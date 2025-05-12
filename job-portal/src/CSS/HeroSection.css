@@ -1,89 +1,74 @@
-/* Reset unwanted spacing */
 .hero {
-  margin-top: -5% !important;
-  padding: 60px 20px;
-  background-color: #f9f9f9;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
+  background-color: #f8f9fa;
+  padding: 80px 20px;
 }
 
-/* Text content styling */
-.hero-content h1 {
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  padding:100px;
+}
+
+.hero h1 {
   font-size: 3rem;
   font-weight: 700;
   line-height: 1.3;
-  color: #333;
-  margin-bottom: 30px;
-}
-.hero-content{
-  padding-left: 10%;
-  margin-top: -20px;
-}
-.hero-content .highlight {
-  color: #007bff; /* Bootstrap primary color or use your brand color */
+  text-align: left;
 }
 
-/* Hire Developer button */
+.highlight {
+  color: #007bff;
+}
+
 .hire-link {
   background-color: #007bff;
-  color: white;
-  padding: 12px 24px;
-  font-size: 1.1rem;
-  font-weight: 500;
+  color: #fff;
+  padding: 12px 28px;
   border-radius: 30px;
   text-decoration: none;
-  transition: background-color 0.3s ease;
+  font-weight: 500;
+  width: max-content;
+  display: inline-block;
+  margin-top: 10px;
+  transition: background 0.3s ease;
 }
 
 .hire-link:hover {
   background-color: #0056b3;
 }
 
-.hire-link .arrow {
-  margin-left: 10px;
-  font-size: 1.4rem;
-  transition: transform 0.3s ease;
+.arrow {
+  margin-left: 8px;
+  font-size: 1.2rem;
 }
 
-.hire-link:hover .arrow {
-  transform: translateX(5px);
-}
-
-/* Developer image styling */
 .developer-image {
   max-width: 90%;
   height: auto;
-  transition: transform 0.4s ease;
+  margin-top: 30px;
 }
 
-.developer-image:hover {
-  transform: scale(1.05);
-}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero-content {
+    margin-top: -20px;
+    text-align: center;
+    padding: 10px;
+  }
+  .developer-image {
+    margin-top: 40px ;
+  }
 
-/* Responsive design */
-@media (max-width: 991px) {
-  .hero {
-    padding: 40px 15px;
+  .hero h1 {
+    font-size: 1.5rem;
     text-align: center;
   }
 
-  .hero-content h1 {
-    font-size: 2.3rem;
-  }
-
   .hire-link {
-    font-size: 1rem;
     padding: 10px 20px;
-  }
-}
-
-@media (max-width: 576px) {
-  .hero-content h1 {
-    font-size: 1.8rem;
-  }
-
-  .developer-image {
-    max-width: 100%;
+    font-size: 1rem;
+    margin-left: 60px;
   }
 }

@@ -4,6 +4,7 @@ import { useInView } from "react-intersection-observer"; // Import the hook
 import "./AboutUs.css";
 import aboutImage from "../Images/why.webp"; 
 import LogoSlider from "./Logo";
+import Footer from "./Footer";
 
 const AboutUs = () => {
   const points = [
@@ -28,6 +29,7 @@ const AboutUs = () => {
   });
 
   return (
+    <div>
     <section className="about-us-section" ref={aboutSectionRef}>
       <motion.div 
         className="about-us-container"
@@ -73,10 +75,8 @@ const AboutUs = () => {
           </div>
         </motion.div>
       </motion.div>
-
-      {/* Logo Slider below */}
-      <LogoSlider />
     </section>
+    </div>
   );
 };
 

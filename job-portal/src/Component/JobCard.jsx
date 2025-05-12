@@ -1,21 +1,19 @@
-// src/components/JobList.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { FaTrash, FaTimes, FaBuilding, FaMapMarkerAlt, FaMoneyBillWave, FaBriefcase, FaClock } from 'react-icons/fa';
+import {
+  FaTrash, FaBuilding, FaMapMarkerAlt, FaMoneyBillWave,
+  FaBriefcase, FaClock
+} from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../CSS/JobList.css';
+import '../CSS/JobList.css'; // Make sure this file is linked
 import Footer from '../Home/Footer';
 
 const JobList = ({ refresh, userType = 'user', username }) => {
   const [jobs, setJobs] = useState([]);
   const [allJobs, setAllJobs] = useState([]);
   const [filters, setFilters] = useState({
-    jobType: '',
-    location: '',
-    minSalary: '',
-    maxSalary: '',
-    title: '', // Add title filter
+    jobType: '', location: '', minSalary: '', maxSalary: '', title: '',
   });
   const [isApplying, setIsApplying] = useState(false);
   const navigate = useNavigate();
@@ -43,7 +41,6 @@ const JobList = ({ refresh, userType = 'user', username }) => {
       const matchesMaxSalary = filters.maxSalary === '' || parseInt(job.salary) <= parseInt(filters.maxSalary);
       return matchesTitle && matchesType && matchesLocation && matchesMinSalary && matchesMaxSalary;
     });
-
     setJobs(filtered);
   }, [filters, allJobs]);
 
@@ -77,17 +74,11 @@ const JobList = ({ refresh, userType = 'user', username }) => {
   return (
     <>
       <div className="joblist-container">
-        <div className="joblist-wrapper">
-          {/* Filters */}
-          <div className="filters">
+        <div className="joblist-wrapper-row">
+          {/* Filters Section */}
+          <div className="filters-left">
             <h3>Filters</h3>
-            <input 
-              type="text" 
-              name="title" 
-              placeholder="Filter by Job Title" 
-              value={filters.title} 
-              onChange={handleFilterChange} 
-            />
+            <input type="text" name="title" placeholder="Filter by Job Title" value={filters.title} onChange={handleFilterChange} />
             <select name="jobType" onChange={handleFilterChange} value={filters.jobType}>
               <option value="">Filter by Job Type</option>
               <option value="Full-Time">Full-Time</option>
@@ -101,64 +92,52 @@ const JobList = ({ refresh, userType = 'user', username }) => {
             <input type="number" name="maxSalary" placeholder="Max Salary" value={filters.maxSalary} onChange={handleFilterChange} />
           </div>
 
-          {/* Job List Grid */}
-          <div className="joblist-grid">
+          {/* Job List Section */}
+          <div className="joblist-grid-right">
             <h2 className="joblist-title">📋 All Posted Jobs</h2>
-
             {jobs.length === 0 ? (
               <div className="no-jobs-message">🚫 No Job Posts Available</div>
             ) : (
-              jobs.map((job) => (
-                <div className="job-card" key={job._id} onClick={() => handleApply(job._id)}>
-                  {job.logo && (
-                    <img src={`http://localhost:3001${job.logo}`} className="job-logo" alt="Company Logo" />
-                  )}
-
-                  <div className="job-content">
-                    <h3 className="job-title-left ">{job.title}</h3>
-
-                    {username === 'admin' && (
-                      <div className="admin-controls">
-                        <button className="icon-btn" onClick={(e) => handleDelete(job._id, e)}>
-                          <FaTrash />
-                        </button>
-                        <button className="icon-btn close-btn" onClick={(e) => handleApply(job._id)}>
-                          <FaTimes />
-                        </button>
-                      </div>
+              <div className="job-cards-grid">
+                {jobs.map((job) => (
+                  <div className="job-card" key={job._id} onClick={() => handleApply(job._id)}>
+                    {job.logo && (
+                      <img src={`http://localhost:3001${job.logo}`} className="job-logo" alt="Company Logo" />
                     )}
-
-                    <p><FaBuilding className="icon" /><strong>{job.company}</strong></p>
-
-                    <div className="job-details-inline">
-                      <span><FaBriefcase className="icon" /> {job.experience} yrs</span>
-                      <span><FaMoneyBillWave className="icon" /> ₹{job.salary}</span>
-                      <span><FaMapMarkerAlt className="icon" /> {job.location}</span>
+                    <div className="job-content">
+                      <h3 className="job-title-left">{job.title}</h3>
+                      {/* Show delete button for Admin or the user who created the job */}
+                      {(userType === 'admin' || job.createdBy === username) && (
+                        <div className="admin-controls">
+                          <button className="icon-btn" onClick={(e) => handleDelete(job._id, e)}>
+                            <FaTrash style={{ color: 'red' }} />
+                          </button>
+                        </div>
+                      )}
+                      <p><FaBuilding className="icon" /><strong>{job.company}</strong></p>
+                      <div className="job-details-inline">
+                        <span><FaBriefcase className="icon" /> {job.experience} yrs</span>
+                        <span><FaMoneyBillWave className="icon" /> ₹{job.salary}</span>
+                        <span><FaMapMarkerAlt className="icon" /> {job.location}</span>
+                      </div>
+                      <p><FaClock className="icon" /> {job.type}</p>
+                      <div className="job-description">
+                        <p>{job.description.length > 100 ? `${job.description.substring(0, 100)}...` : job.description}</p>
+                      </div>
+                      <button
+                        className={`apply-btn ${isApplying ? 'applying' : ''}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleApply(job._id);
+                        }}
+                        disabled={isApplying}
+                      >
+                        {isApplying ? 'Applying...' : 'Apply Now'}
+                      </button>
                     </div>
-
-                    <p><FaClock className="icon" /> {job.type}</p>
-
-                    <div className="job-description">
-                      <p>
-                        {job.description.length > 100
-                          ? `${job.description.substring(0, 100)}...`
-                          : job.description}
-                      </p>
-                    </div>
-
-                    <button
-                      className={`apply-btn ${isApplying ? 'applying' : ''}`}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleApply(job._id);
-                      }}
-                      disabled={isApplying}
-                    >
-                      {isApplying ? 'Applying...' : 'Apply Now'}
-                    </button>
                   </div>
-                </div>
-              ))
+                ))}
+              </div>
             )}
           </div>
         </div>

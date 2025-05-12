@@ -29,14 +29,6 @@ const JobForm = ({ username }) => {
     setError(null);
     setSuccessMsg('');
 
-    // Job description exact word count validation
-    // const descriptionWordCount = formData.description.trim().split(/\s+/).length;
-    // if (descriptionWordCount !== 300) {
-    //   setError('Please provide a job description with exactly 300 words.');
-    //   setLoading(false);
-    //   return;
-    // }
-
     try {
       const jobData = {
         ...formData,
@@ -46,6 +38,7 @@ const JobForm = ({ username }) => {
       const response = await axios.post('http://localhost:3001/jobs/add', jobData);
       console.log('Job posted successfully:', response.data);
 
+      // Auto-fill the form after successful submission or clear it
       setFormData({
         title: '',
         company: '',
@@ -78,6 +71,14 @@ const JobForm = ({ username }) => {
     }
   };
 
+  // Handle form submission via Enter key
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // Prevent form submission if Enter is pressed
+      handleSubmit(e); // Submit the form on Enter press
+    }
+  };
+
   return (
     <div className="job-form-container">
       <h2 className="form-title">Post New Job</h2>
@@ -86,19 +87,43 @@ const JobForm = ({ username }) => {
           {/* All input fields same as before */}
           <div className="form-group">
             <label>Job Title</label>
-            <input name="title" value={formData.title} onChange={handleChange} required />
+            <input 
+              name="title" 
+              value={formData.title} 
+              onChange={handleChange} 
+              onKeyPress={handleKeyPress} 
+              required 
+            />
           </div>
           <div className="form-group">
             <label>Company Name</label>
-            <input name="company" value={formData.company} onChange={handleChange} required />
+            <input 
+              name="company" 
+              value={formData.company} 
+              onChange={handleChange} 
+              onKeyPress={handleKeyPress} 
+              required 
+            />
           </div>
           <div className="form-group">
             <label>Location</label>
-            <input name="location" value={formData.location} onChange={handleChange} required />
+            <input 
+              name="location" 
+              value={formData.location} 
+              onChange={handleChange} 
+              onKeyPress={handleKeyPress} 
+              required 
+            />
           </div>
           <div className="form-group">
             <label>Job Type</label>
-            <select name="type" value={formData.type} onChange={handleChange} required>
+            <select 
+              name="type" 
+              value={formData.type} 
+              onChange={handleChange} 
+              onKeyPress={handleKeyPress} 
+              required
+            >
               <option value="">Select Job Type</option>
               <option value="Full-Time">Full-Time</option>
               <option value="Part-Time">Part-Time</option>
@@ -109,11 +134,24 @@ const JobForm = ({ username }) => {
           </div>
           <div className="form-group">
             <label>Salary</label>
-            <input name="salary" value={formData.salary} onChange={handleChange} required />
+            <input 
+              name="salary" 
+              value={formData.salary} 
+              onChange={handleChange} 
+              onKeyPress={handleKeyPress} 
+              required 
+            />
           </div>
           <div className="form-group">
             <label>Experience Required</label>
-            <input name="experience" value={formData.experience} onChange={handleChange} placeholder="Please enter experience" required />
+            <input 
+              name="experience" 
+              value={formData.experience} 
+              onChange={handleChange} 
+              placeholder="Please enter experience" 
+              onKeyPress={handleKeyPress} 
+              required 
+            />
           </div>
           <div className="form-group full-width">
             <label>Job Description (300 words)</label>
@@ -123,6 +161,7 @@ const JobForm = ({ username }) => {
               onChange={handleChange} 
               rows="4" 
               placeholder="Provide a detailed job description. Please ensure it is exactly 300 words."
+              onKeyPress={handleKeyPress} 
               required
             ></textarea>
           </div>

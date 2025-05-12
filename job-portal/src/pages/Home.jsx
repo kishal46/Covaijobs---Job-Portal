@@ -3,11 +3,12 @@ import { motion } from 'framer-motion';
 import '../CSS/HeroSection.css';
 import developerImage from '../Images/Home.png';
 import AboutUs from '../Home/AboutUs';
+import LogoSlider from '../Home/Logo';
 
 const HeroSection = () => {
   return (
     <div>
-    <div className="hero container-fluid">
+    <div className="hero container-fluid ">
       <div className="row align-items-center">
         <div className="col-lg-6 col-md-12 hero-content text-center text-lg-start">
           <h1>
@@ -36,6 +37,8 @@ const HeroSection = () => {
       </div>
     </div>
     <AboutUs/>
+     <LogoSlider />
+      
     </div>
   );
 };
