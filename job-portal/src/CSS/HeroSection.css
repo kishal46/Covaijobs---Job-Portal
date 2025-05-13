@@ -1,6 +1,9 @@
 .hero {
   background-color: #f8f9fa;
   padding: 80px 20px;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
 }
 
 .hero-content {
@@ -8,14 +11,14 @@
   flex-direction: column;
   justify-content: center;
   text-align: left;
-  padding:100px;
+  padding: 60px 40px;
 }
 
 .hero h1 {
   font-size: 3rem;
   font-weight: 700;
   line-height: 1.3;
-  text-align: left;
+  margin-bottom: 20px;
 }
 
 .highlight {
@@ -45,30 +48,46 @@
 }
 
 .developer-image {
-  max-width: 90%;
+  max-width: 100%;
   height: auto;
   margin-top: 30px;
+  border-radius: 20px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .hero-content {
-    margin-top: -20px;
+/* Responsive */
+@media (max-width: 992px) {
+  .hero {
+    padding: 60px 15px;
     text-align: center;
-    padding: 10px;
   }
-  .developer-image {
-    margin-top: 40px ;
+
+  .hero-content {
+    padding: 30px 20px;
+    align-items: center;
+    text-align: center;
   }
 
   .hero h1 {
-    font-size: 1.5rem;
-    text-align: center;
+    font-size: 2rem;
   }
 
   .hire-link {
-    padding: 10px 20px;
     font-size: 1rem;
-    margin-left: 60px;
+    padding: 10px 24px;
+  }
+
+  .developer-image {
+    margin-top: 30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero h1 {
+    font-size: 1.6rem;
+    line-height: 1.4;
+  }
+
+  .hire-link {
+    margin-top: 16px;
   }
 }

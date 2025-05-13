@@ -65,10 +65,6 @@
   
   /* Responsive tweaks */
   @media (max-width: 768px) {
-
-    .logo-slider-wrapper{
-      margin-top: 130px;
-    }
     .logo-slider {
       gap: 30px;
       animation-duration: 35s;
