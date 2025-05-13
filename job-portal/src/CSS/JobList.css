@@ -122,9 +122,32 @@
   color: red;
 }
 
+/* Mobile view: Smaller filter card size */
+@media (max-width: 768px) {
+  .filters-left {
+    flex: 0 0 200px; /* Reduced width for smaller mobile view */
+    max-width: 250px; /* Ensure it doesn't grow too large */
+    padding: 15px; /* Less padding for compact view */
+  }
+
+  .joblist-wrapper-row {
+    flex-direction: column; /* Stack filters and job list vertically */
+  }
+
+  .job-cards-grid {
+    grid-template-columns: 1fr; /* Single column grid for small screens */
+  }
+
+  .filters-left {
+    width: 100%;
+  }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .joblist-wrapper-row {
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
   }
 
@@ -132,7 +155,5 @@
     grid-template-columns: 1fr;
   }
 
-  .filters-left {
-    width: 100%;
-  }
+  
 }
