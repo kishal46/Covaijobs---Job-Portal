@@ -21,15 +21,12 @@ const techStack = {
   ],
 };
 
-// Variants for staggered child animation
+// Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.3,
-    },
+    transition: { staggerChildren: 0.15, delayChildren: 0.3 },
   },
 };
 
@@ -43,16 +40,23 @@ const itemVariantsRight = {
   visible: { opacity: 1, x: 0 },
 };
 
+const itemVariantsMobile = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0 },
+};
+
 const TechStack = () => {
+  const isMobile = window.innerWidth <= 768;
+
   return (
     <motion.div
-      className="container py-5"
+      className="techstack-container"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
       <motion.h2
-        className="text-center mb-2"
+        className="techstack-heading"
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -61,7 +65,7 @@ const TechStack = () => {
       </motion.h2>
 
       <motion.p
-        className="text-center text-muted mb-4"
+        className="techstack-subheading"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.6 }}
@@ -70,54 +74,48 @@ const TechStack = () => {
       </motion.p>
 
       <div className="row">
-        {/* Front-End Technologies */}
+        {/* Frontend */}
         <div className="col-md-6 mb-4">
-          <h4 className="mb-3 fw-bold">Front-End Technologies</h4>
+          <h4 className="fw-bold mb-3">Front-End Technologies</h4>
           <motion.div className="row g-3" variants={containerVariants}>
             {techStack.frontend.map((tech, idx) => (
               <motion.div
                 key={idx}
                 className="col-12 col-sm-6"
-                variants={itemVariantsLeft}
+                variants={isMobile ? itemVariantsMobile : itemVariantsLeft}
               >
                 <motion.div
-                  className="d-flex align-items-center shadow-sm p-3 rounded bg-white h-100"
-                  whileHover={{ scale: 1.04 }}
+                  className="techstack-card"
+                  {...(!tech.name.toLowerCase().includes('express') && {
+                    whileHover: { scale: 1.05 },
+                  })}
                 >
-                  <img
-                    src={tech.icon}
-                    alt={tech.name}
-                    className="me-3"
-                    style={{ width: 65, height: 65 }}
-                  />
-                  <span className="fw-medium fs-6">{tech.name}</span>
+                  <img src={tech.icon} alt={tech.name} className="techstack-icon" />
+                  <span className="techstack-text">{tech.name}</span>
                 </motion.div>
               </motion.div>
             ))}
           </motion.div>
         </div>
 
-        {/* Back-End Technologies */}
+        {/* Backend */}
         <div className="col-md-6 mb-4">
-          <h4 className="mb-3 fw-bold">Back-End Technologies</h4>
+          <h4 className="fw-bold mb-3">Back-End Technologies</h4>
           <motion.div className="row g-3" variants={containerVariants}>
             {techStack.backend.map((tech, idx) => (
               <motion.div
                 key={idx}
                 className="col-12 col-sm-6"
-                variants={itemVariantsRight}
+                variants={isMobile ? itemVariantsMobile : itemVariantsRight}
               >
                 <motion.div
-                  className="d-flex align-items-center shadow-sm p-3 rounded bg-white h-100"
-                  whileHover={{ scale: 1.04 }}
+                  className="techstack-card"
+                  {...(!tech.name.toLowerCase().includes('express') && {
+                    whileHover: { scale: 1.05 },
+                  })}
                 >
-                  <img
-                    src={tech.icon}
-                    alt={tech.name}
-                    className="me-3"
-                    style={{ width: 65, height: 65 }}
-                  />
-                  <span className="fw-medium fs-6">{tech.name}</span>
+                  <img src={tech.icon} alt={tech.name} className="techstack-icon" />
+                  <span className="techstack-text">{tech.name}</span>
                 </motion.div>
               </motion.div>
             ))}
