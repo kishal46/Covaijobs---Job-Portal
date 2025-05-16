@@ -1,26 +1,53 @@
+.main-container {
+  min-height: 100vh;
+}
+
 .profile-card {
-    max-width: 700px;
-    background: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  input.form-control-sm,
-  button.btn {
-    font-size: 0.95rem;
-  }
-  
-  .badge {
-    padding: 0.45em 0.65em;
-    font-size: 0.75rem;
-    border-radius: 12px;
-  }
-  
-  footer {
-    background-color: #002f4b;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
-    margin-top: 40px;
-  }
-  
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  max-width: 850px;
+  animation: fadeInUp 0.8s ease;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.input-field,
+.input-file {
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.input-field:focus,
+.input-file:focus {
+  box-shadow: 0 0 10px #0dcaf0;
+  border-color: #0dcaf0;
+}
+
+.skill-badge {
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 50px;
+  animation: fadeInSkill 0.3s ease-in;
+  display: inline-flex;
+  align-items: center;
+}
+
+.skill-delete-btn {
+  margin-left: 8px;
+  padding: 0 6px;
+  font-size: 12px;
+  border-radius: 60%;
+}
+
+@keyframes fadeInSkill {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.btn-success:hover {
+  background-color: #157347;
+  transform: scale(1.05);
+}

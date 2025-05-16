@@ -24,7 +24,6 @@ const DeveloperHiringForm = () => {
       const response = await axios.post('http://localhost:3001/send-email', formData);
       console.log(response.data.message);
       alert("Your form has been submitted successfully!");
-      // Optionally, reset the form after successful submission
       setFormData({
         name: "",
         jobTitle: "",

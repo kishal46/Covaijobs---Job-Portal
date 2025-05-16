@@ -1,4 +1,3 @@
-/* General container styling */
 .auth-container {
   width: 100%;
   max-width: 1200px;
@@ -47,7 +46,6 @@
   padding: 5px;
 }
 
-/* Skills display styling */
 .skills-display {
   display: flex;
   flex-wrap: wrap;
@@ -80,7 +78,6 @@
   background-color: #0056b3;
 }
 
-/* Responsive design for mobile */
 @media (max-width: 768px) {
   .auth-form {
     padding: 15px;
@@ -94,21 +91,18 @@
     font-size: 20px;
   }
 
-  /* Input fields, especially for smaller screens */
   .form-group input,
   .form-group select {
     font-size: 16px;
     padding: 12px;
   }
 
-  /* Button styling for smaller screens */
   .auth-btn {
     padding: 14px;
     font-size: 18px;
   }
 }
 
-/* Responsive layout for larger screens: Two-column layout */
 @media (min-width: 769px) {
   .form-group {
     display: flex;
@@ -117,7 +111,7 @@
   }
 
   .form-group:nth-child(odd) {
-    flex-basis: 48%; /* Create space for two-column layout */
+    flex-basis: 48%; 
     margin-right: 4%;
   }
 
@@ -132,31 +126,26 @@
   }
 }
 
-/* Ensure card has smooth shadows and rounded corners */
 .card {
   border-radius: 1rem;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
 }
 
-/* Skill badge styling */
 .badge {
   font-size: 0.9rem;
   padding: 0.5em 0.8em;
   border-radius: 20px;
 }
 
-/* Add subtle hover effect to input fields */
 .form-control:focus {
   border-color: #4caf50;
   box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
 }
 
-/* File input spacing */
 input[type="file"] {
   padding: 0.35rem;
 }
 
-/* Save button customization */
 button[type="submit"] {
   font-size: 1rem;
   font-weight: 500;
@@ -168,7 +157,6 @@ button[type="submit"]:hover {
   border-color: #28a745;
 }
 
-/* Responsive skill tag area */
 .mt-2 .badge {
   margin-top: 5px;
   cursor: default;

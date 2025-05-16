@@ -6,10 +6,10 @@ import {
   FaBriefcase, FaClock
 } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../CSS/JobList.css'; // Make sure this file is linked
+import '../CSS/JobList.css';
 import Footer from '../Home/Footer';
 
-const JobList = ({ refresh, userType = 'user', username }) => {
+const JobList = ({ refresh }) => {
   const [jobs, setJobs] = useState([]);
   const [allJobs, setAllJobs] = useState([]);
   const [filters, setFilters] = useState({
@@ -18,6 +18,11 @@ const JobList = ({ refresh, userType = 'user', username }) => {
   const [isApplying, setIsApplying] = useState(false);
   const navigate = useNavigate();
 
+  // Get user from localStorage with correct key userName (capital N)
+  const user = JSON.parse(localStorage.getItem('user'));
+  const username = user?.userName || '';
+
+  // Fetch jobs from backend
   const fetchJobs = async () => {
     try {
       const res = await axios.get('http://localhost:3001/jobs');
@@ -32,6 +37,7 @@ const JobList = ({ refresh, userType = 'user', username }) => {
     fetchJobs();
   }, [refresh]);
 
+  // Apply filters when filters or allJobs change
   useEffect(() => {
     const filtered = allJobs.filter((job) => {
       const matchesTitle = filters.title === '' || job.title.toLowerCase().includes(filters.title.toLowerCase());
@@ -50,14 +56,16 @@ const JobList = ({ refresh, userType = 'user', username }) => {
       try {
         await axios.delete(`http://localhost:3001/jobs/${id}`);
         setJobs((prevJobs) => prevJobs.filter((job) => job._id !== id));
+        setAllJobs((prevJobs) => prevJobs.filter((job) => job._id !== id)); 
       } catch (error) {
         console.error('Error deleting job:', error);
       }
     }
   };
 
+  // Apply for a job
   const handleApply = (jobId) => {
-    if (!localStorage.getItem('user')) {
+    if (!user) {
       navigate('/signup');
     } else {
       setIsApplying(true);
@@ -78,7 +86,13 @@ const JobList = ({ refresh, userType = 'user', username }) => {
           {/* Filters Section */}
           <div className="filters-left">
             <h3>Filters</h3>
-            <input type="text" name="title" placeholder="Filter by Job Title" value={filters.title} onChange={handleFilterChange} />
+            <input
+              type="text"
+              name="title"
+              placeholder="Filter by Job Title"
+              value={filters.title}
+              onChange={handleFilterChange}
+            />
             <select name="jobType" onChange={handleFilterChange} value={filters.jobType}>
               <option value="">Filter by Job Type</option>
               <option value="Full-Time">Full-Time</option>
@@ -87,9 +101,27 @@ const JobList = ({ refresh, userType = 'user', username }) => {
               <option value="Contract">Contract</option>
               <option value="Freelance">Freelance</option>
             </select>
-            <input type="text" name="location" placeholder="Filter by Location" value={filters.location} onChange={handleFilterChange} />
-            <input type="number" name="minSalary" placeholder="Min Salary" value={filters.minSalary} onChange={handleFilterChange} />
-            <input type="number" name="maxSalary" placeholder="Max Salary" value={filters.maxSalary} onChange={handleFilterChange} />
+            <input
+              type="text"
+              name="location"
+              placeholder="Filter by Location"
+              value={filters.location}
+              onChange={handleFilterChange}
+            />
+            <input
+              type="number"
+              name="minSalary"
+              placeholder="Min Salary"
+              value={filters.minSalary}
+              onChange={handleFilterChange}
+            />
+            <input
+              type="number"
+              name="maxSalary"
+              placeholder="Max Salary"
+              value={filters.maxSalary}
+              onChange={handleFilterChange}
+            />
           </div>
 
           {/* Job List Section */}
@@ -106,14 +138,15 @@ const JobList = ({ refresh, userType = 'user', username }) => {
                     )}
                     <div className="job-content">
                       <h3 className="job-title-left">{job.title}</h3>
-                      {/* Show delete button for Admin or the user who created the job */}
-                      {(userType === 'admin' || job.createdBy === username) && (
+
+                      {username === 'admin' && (
                         <div className="admin-controls">
                           <button className="icon-btn" onClick={(e) => handleDelete(job._id, e)}>
                             <FaTrash style={{ color: 'red' }} />
                           </button>
                         </div>
                       )}
+
                       <p><FaBuilding className="icon" /><strong>{job.company}</strong></p>
                       <div className="job-details-inline">
                         <span><FaBriefcase className="icon" /> {job.experience} yrs</span>

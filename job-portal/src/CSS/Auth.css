@@ -12,7 +12,7 @@
 }
 
 .password-input {
-  padding-right: 30px; /* Make room for the icon */
+  padding-right: 30px; 
 }
 
 .password-toggle-icon {
@@ -106,7 +106,6 @@
   text-decoration: underline;
 }
 
-/* Responsive Enhancements */
 @media (max-width: 480px) {
   .auth-form {
     padding: 30px 20px;

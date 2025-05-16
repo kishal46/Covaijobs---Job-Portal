@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import the eye icons
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import '../CSS/Auth.css';
 import Footer from "../Home/Footer";
 
@@ -12,7 +12,7 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordVisible, setPasswordVisible] = useState(false); // State for password visibility
+  const [passwordVisible, setPasswordVisible] = useState(false); 
   const navigate = useNavigate();
 
   const handleSignUp = (e) => {
@@ -21,7 +21,7 @@ const SignUp = () => {
     const formData = {
       userName,
       email,
-      phoneNumber, // ✅ key must match Mongoose schema
+      phoneNumber, 
       password,
       role: 'user'
     };
@@ -93,7 +93,7 @@ const SignUp = () => {
             <label>Password:</label>
             <div className="password-input-wrapper">
               <input 
-                type={passwordVisible ? "text" : "password"} // Toggle password visibility
+                type={passwordVisible ? "text" : "password"}
                 placeholder="Enter your password" 
                 value={password} 
                 onChange={(e) => setPassword(e.target.value)} 
@@ -104,7 +104,7 @@ const SignUp = () => {
                 className="password-toggle-icon" 
                 onClick={togglePasswordVisibility}
               >
-                {passwordVisible ? <FaEyeSlash /> : <FaEye />} {/* Eye icon */}
+                {passwordVisible ? <FaEyeSlash /> : <FaEye />} 
               </span>
             </div>
           </div>

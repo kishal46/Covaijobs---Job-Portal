@@ -16,7 +16,9 @@ const HeroSection = () => {
             manage them<br />
             with <span className="highlight">ease</span>
           </h1>
+
           <a
+          
             href="/hiredev"
             className="hire-link d-inline-flex align-items-center justify-content-center "
           >
