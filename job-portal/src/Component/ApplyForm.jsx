@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './JobApplication.css'; // Custom CSS file for styling
+import './JobApplication.css'; 
 
 const JobApplication = () => {
   const navigate = useNavigate();
@@ -30,7 +30,6 @@ const JobApplication = () => {
     }
   }, []);
 
-  // Backspace to go back - only when not typing in input
   useEffect(() => {
     const handleKeyDown = (e) => {
       const activeTag = document.activeElement.tagName.toLowerCase();

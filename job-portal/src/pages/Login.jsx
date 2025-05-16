@@ -12,7 +12,7 @@ const Login = () => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [passwordVisible, setPasswordVisible] = useState(false); // State to toggle password visibility
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
@@ -27,7 +27,6 @@ const Login = () => {
         if (res.data.success) {
           const { userName, role, email, phone } = res.data.user;
 
-          // Store full user info in localStorage
           const user = { userName, role, email, phone };
           localStorage.setItem("user", JSON.stringify(user));
 
@@ -46,7 +45,6 @@ const Login = () => {
       });
   };
 
-  // Toggle password visibility
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
@@ -74,7 +72,7 @@ const Login = () => {
             <label>Password:</label>
             <div className="password-input-wrapper">
               <input
-                type={passwordVisible ? "text" : "password"} // Toggle between text and password
+                type={passwordVisible ? "text" : "password"} 
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -85,7 +83,7 @@ const Login = () => {
                 className="password-toggle-icon"
                 onClick={togglePasswordVisibility}
               >
-                {passwordVisible ? <FaEyeSlash /> : <FaEye />} {/* Display Eye Slash or Eye */}
+                {passwordVisible ? <FaEyeSlash /> : <FaEye />} 
               </span>
             </div>
           </div>

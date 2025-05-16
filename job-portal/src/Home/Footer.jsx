@@ -9,7 +9,6 @@ const Footer = () => {
     <footer className="footer bg-black text-white pt-4 pb-2 px-4 w-100">
       <div className="w-100 px-4">
 
-        {/* Row 1: Logo + Social Media */}
         <div className="row text-center text-md-start mb-3">
           <div className="col-md-4 mb-3 mb-md-0">
             <img src={Logo} alt="CovaiJobs Logo" style={{ width: '140px' }} className="mb-2" />
@@ -22,7 +21,6 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Row 2: Quick Links */}
           <div className="col-md-4 mb-3 mb-md-0">
             <h6 className="fw-bold">Quick Links</h6>
             <ul className="list-unstyled small">
@@ -34,7 +32,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Row 3: Address + Map */}
           <div className="col-md-4">
             <h6 className="fw-bold">Address</h6>
             <p className="small mb-2">

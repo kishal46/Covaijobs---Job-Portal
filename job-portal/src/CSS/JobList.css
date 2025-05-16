@@ -11,7 +11,7 @@
 }
 
 .filters-left {
-  flex: 0 0 250px; /* Fixed width */
+  flex: 0 0 250px;
   max-width: 350px;
   display: flex;
   flex-direction: column;
@@ -43,7 +43,7 @@
   box-shadow: 0 4px 8px rgba(0,0,0,0.05);
   cursor: pointer;
   transition: transform 0.3s ease;
-  position: relative; /* Ensures delete icon is positioned relative to the card */
+  position: relative; 
 }
 
 .job-card:hover {
@@ -98,9 +98,8 @@
   cursor: not-allowed;
 }
 
-/* Admin Controls (delete icon position) */
 .admin-controls {
-  position: absolute; /* Positioning it relative to the job card */
+  position: absolute;
   top: 10px;
   right: 10px;
   z-index: 10;
@@ -110,32 +109,31 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: red; /* Red color for delete icon */
-  font-size: 1.2rem; /* Make the icon smaller */
+  color: red; 
+  font-size: 1.2rem;
 }
 
 .icon-btn:hover {
-  color: darkred; /* Change color on hover */
+  color: darkred; 
 }
 
 .close-btn {
   color: red;
 }
 
-/* Mobile view: Smaller filter card size */
 @media (max-width: 768px) {
   .filters-left {
-    flex: 0 0 200px; /* Reduced width for smaller mobile view */
-    max-width: 250px; /* Ensure it doesn't grow too large */
-    padding: 15px; /* Less padding for compact view */
+    flex: 0 0 200px; 
+    max-width: 250px; 
+    padding: 15px; 
   }
 
   .joblist-wrapper-row {
-    flex-direction: column; /* Stack filters and job list vertically */
+    flex-direction: column;
   }
 
   .job-cards-grid {
-    grid-template-columns: 1fr; /* Single column grid for small screens */
+    grid-template-columns: 1fr;
   }
 
   .filters-left {
@@ -143,7 +141,7 @@
   }
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
   .joblist-wrapper-row {
     justify-content: center;

@@ -1,5 +1,5 @@
 import React from 'react';
-import './StaffServices.css'; // Custom CSS
+import './StaffServices.css'; 
 import { motion } from 'framer-motion';
 
 const services = [

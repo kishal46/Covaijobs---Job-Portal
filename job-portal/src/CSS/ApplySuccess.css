@@ -1,4 +1,3 @@
-/* src/CSS/ApplySuccess.css */
 .success-container {
     display: flex;
     justify-content: center;
@@ -73,7 +72,6 @@
     background-color: #0056b3;
   }
   
-  /* Fade-in animation */
   @keyframes fadeIn {
     0% {
       opacity: 0;

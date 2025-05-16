@@ -23,10 +23,9 @@ const About = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Send form data to the backend (assuming endpoint is correct)
       await axios.post('http://localhost:3001/send-email', formData);
       alert('Message sent successfully!');
-      setFormData({ name: '', phone: '', email: '', subject: '', message: '' }); // Reset form after submission
+      setFormData({ name: '', phone: '', email: '', subject: '', message: '' }); 
     } catch (error) {
       alert('Failed to send message.');
       console.error(error);
@@ -39,9 +38,9 @@ const About = () => {
         <motion.form 
           className="contact-form" 
           onSubmit={handleSubmit}
-          initial={{ opacity: 0, y: 20 }} // Start from a little lower to add a smooth slide-in effect
-          animate={{ opacity: 1, y: 0 }} // Animate to its normal position
-          transition={{ opacity: { duration: 0.5 }, y: { type: 'spring', stiffness: 100, damping: 25 } }} // Fine-tuning the animations
+          initial={{ opacity: 0, y: 20 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          transition={{ opacity: { duration: 0.5 }, y: { type: 'spring', stiffness: 100, damping: 25 } }} 
         >
           <h5>Contact Form</h5>
           <input
@@ -59,7 +58,7 @@ const About = () => {
             value={formData.phone}
             onChange={handleChange}
             required
-            pattern="^[0-9]{10}$" // Validate phone number pattern
+            pattern="^[0-9]{10}$" 
             title="Please enter a valid 10-digit phone number."
           />
           <input

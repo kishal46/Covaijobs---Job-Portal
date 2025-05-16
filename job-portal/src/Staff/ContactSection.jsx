@@ -13,17 +13,15 @@ const ContactSection = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false); // Whether the form has been successfully submitted
-  const [lastSubmitted, setLastSubmitted] = useState(null); // Timestamp for last submission
+  const [isSubmitted, setIsSubmitted] = useState(false); 
+  const [lastSubmitted, setLastSubmitted] = useState(null); 
 
   useEffect(() => {
-    // If lastSubmitted is set, start a timeout to reset the form after 10 minutes
     if (lastSubmitted) {
       const timer = setTimeout(() => {
-        setIsSubmitted(false); // Reset the submission status after 10 minutes
-      }, 600000); // 600000 ms = 10 minutes
+        setIsSubmitted(false);
+      }, 600000);
 
-      // Cleanup the timer when component unmounts or when lastSubmitted changes
       return () => clearTimeout(timer);
     }
   }, [lastSubmitted]);
@@ -41,8 +39,8 @@ const ContactSection = () => {
 
     try {
       await axios.post('http://localhost:3001/send-email', formData);
-      setIsSubmitted(true); // Mark the form as submitted
-      setLastSubmitted(Date.now()); // Store the timestamp of the submission
+      setIsSubmitted(true);
+      setLastSubmitted(Date.now()); 
       alert('Message sent successfully!');
       setFormData({ name: '', phone: '', email: '', subject: '', message: '' });
     } catch (error) {
@@ -56,7 +54,6 @@ const ContactSection = () => {
   return (
     <div className="container my-5 gap-2">
       <div className="row align-items-start">
-        {/* Left Section with motion */}
         <motion.div
           className="col-md-6"
           initial={{ opacity: 0, x: -100 }}
@@ -64,7 +61,7 @@ const ContactSection = () => {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h2 className="highlight-title">Essential IT Staff Augmentation Services in Bangalore</h2>
+          <h2 className="highlight-title">Essential IT Staff Augmentation Services in Coimbatore</h2>
           <p className="desc">
             Staff augmentation is an outsourcing strategy, suitable for organizations who are looking to supplement
             their internal capacity by hiring employees through a staffing agency. This flexible staffing solution
@@ -97,7 +94,6 @@ const ContactSection = () => {
             <input type="text" name="subject" placeholder="Subject" value={formData.subject} onChange={handleChange} required />
             <textarea name="message" placeholder="Message" value={formData.message} onChange={handleChange} required />
             
-            {/* Disable button if the form is submitted or submitting */}
             <button
               type="submit"
               className={`submit-btn ${isSubmitting ? 'loading' : ''}`}

@@ -12,7 +12,6 @@ router.post('/add', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-// DELETE job by ID
 router.delete('/:id', async (req, res) => {
   try {
     await Job.findByIdAndDelete(req.params.id);

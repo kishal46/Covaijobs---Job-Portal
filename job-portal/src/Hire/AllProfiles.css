@@ -1,0 +1,117 @@
+/* Container for profile cards: manages height collapse and margin */
+.profile-card-wrapper {
+  overflow: hidden; /* needed for smooth height collapse */
+  transition: max-height 0.5s ease, margin 0.5s ease, padding 0.5s ease;
+  max-height: 1000px; /* large enough to contain the card */
+  margin-bottom: 1.5rem;
+  padding: 0;
+}
+
+/* Entrance animation: slide down + fade in */
+.card-entrance {
+  animation: slideFadeIn 0.5s ease forwards;
+}
+
+@keyframes slideFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Deletion animation: fade out + slide up + collapse height */
+.card-deleting {
+  opacity: 0 !important;
+  transform: translateY(-15px);
+  max-height: 0 !important;
+  margin-bottom: 0 !important;
+  padding: 0 !important;
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s ease, max-height 0.5s ease,
+    margin 0.5s ease, padding 0.5s ease;
+}
+
+/* Delete icon button styling */
+.delete-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  color: #dc3545; /* Bootstrap danger red */
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 10;
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+}
+
+.delete-icon:hover:not(:disabled) {
+  color: #a71d2a; /* Darker red on hover */
+}
+
+.delete-icon:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Profile card base style */
+.profile-card {
+  background-color: #fff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  transition: box-shadow 0.3s ease;
+  position: relative;
+}
+
+.profile-card:hover {
+  box-shadow: 0 8px 20px rgb(0 0 0 / 0.15);
+}
+
+/* Search input styling */
+.search-wrapper input[type="search"] {
+  padding-left: 2.5rem !important;
+  font-size: 1rem;
+}
+
+/* Search icon inside input */
+.search-icon {
+  font-size: 1.2rem;
+  color: #6c757d;
+  pointer-events: none;
+}
+
+/* Profile placeholder for missing profile picture */
+.profile-placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  font-size: 2.5rem;
+}
+
+/* Badges for skills */
+.badge {
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+/* Responsive fixes (optional) */
+@media (max-width: 576px) {
+  .profile-card {
+    padding: 1rem;
+  }
+}

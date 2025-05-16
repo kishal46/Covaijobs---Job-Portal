@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // for navigation
+import { useNavigate } from 'react-router-dom';
 import '../CSS/JobForm.css';
 
 const JobForm = ({ username }) => {
@@ -18,7 +18,7 @@ const JobForm = ({ username }) => {
   const [error, setError] = useState(null);
   const [successMsg, setSuccessMsg] = useState('');
 
-  const navigate = useNavigate(); // react-router-dom navigation
+  const navigate = useNavigate(); 
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -38,7 +38,6 @@ const JobForm = ({ username }) => {
       const response = await axios.post('http://localhost:3001/jobs/add', jobData);
       console.log('Job posted successfully:', response.data);
 
-      // Auto-fill the form after successful submission or clear it
       setFormData({
         title: '',
         company: '',
@@ -51,7 +50,6 @@ const JobForm = ({ username }) => {
 
       setSuccessMsg('Job posted successfully! Redirecting...');
 
-      // Wait 1.5 seconds then navigate
       setTimeout(() => {
         navigate('/currentjobs');
       }, 1500);
@@ -71,11 +69,10 @@ const JobForm = ({ username }) => {
     }
   };
 
-  // Handle form submission via Enter key
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      e.preventDefault(); // Prevent form submission if Enter is pressed
-      handleSubmit(e); // Submit the form on Enter press
+      e.preventDefault(); 
+      handleSubmit(e);
     }
   };
 
@@ -84,7 +81,6 @@ const JobForm = ({ username }) => {
       <h2 className="form-title">Post New Job</h2>
       <form onSubmit={handleSubmit} className="job-form">
         <div className="form-grid">
-          {/* All input fields same as before */}
           <div className="form-group">
             <label>Job Title</label>
             <input 

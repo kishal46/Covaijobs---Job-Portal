@@ -1,49 +1,111 @@
-const express = require('express');
-const multer = require('multer');
-const User = require('../models/User');
-const authenticateToken = require('../middleware/authMiddleware');
+const express = require("express");
 const router = express.Router();
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+const JobSeeker = require("../models/JobSeeker");
 
-// Set up multer for file uploads
+const uploadsDir = path.join(__dirname, "../uploads");
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './uploads/'); // specify the folder where files will be saved
+  destination: (req, file, cb) => {
+    cb(null, uploadsDir);
   },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname); // use a timestamp for unique filenames
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    cb(null, `${Date.now()}-${file.fieldname}${ext}`);
+  },
+});
+
+const upload = multer({ storage });
+
+// POST route for profile submission
+router.post("/profile/details", upload.fields([
+  { name: "resume", maxCount: 1 },
+  { name: "profilePicture", maxCount: 1 },
+]), async (req, res) => {
+  try {
+    const {
+      userId,
+      name,
+      email,
+      experience,
+      skills,
+      location,
+      phoneNumber,
+    } = req.body;
+
+    if (!userId || !name || !email) {
+      return res.status(400).json({ success: false, message: "Missing required fields" });
+    }
+
+    const resume = req.files?.resume ? req.files.resume[0].filename : null;
+    const profilePicture = req.files?.profilePicture ? req.files.profilePicture[0].filename : null;
+
+    const jobSeekerData = {
+      userId,
+      name,
+      email,
+      experience,
+      skills: skills ? JSON.parse(skills) : [],
+      location,
+      phoneNumber,
+      resume,
+      profilePicture,
+    };
+
+    const jobSeeker = await JobSeeker.findOneAndUpdate(
+      { userId },
+      jobSeekerData,
+      { new: true, upsert: true }
+    );
+
+    res.json({ success: true, jobSeeker });
+  } catch (error) {
+    console.error("Profile save error:", error);
+    res.status(500).json({ success: false, message: "Server error" });
   }
 });
 
-const upload = multer({ storage: storage });
 
-// Update Profile Route with file uploads
-router.post('/details', authenticateToken, upload.fields([{ name: 'resume', maxCount: 1 }, { name: 'profilePicture', maxCount: 1 }]), async (req, res) => {
-  const { userId, name, email, experience, skills, location, phoneNumber } = req.body;
-  const resume = req.files['resume'] ? req.files['resume'][0].path : null;
-  const profilePicture = req.files['profilePicture'] ? req.files['profilePicture'][0].path : null;
-
+router.get('/profiles/all', async (req, res) => {
   try {
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ success: false, message: 'User not found' });
+    const profiles = await JobSeeker.find({});
+    res.json({ success: true, profiles });
+  } catch (error) {
+    console.error("Error fetching profiles:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+router.delete('/profiles/delete/:id', async (req, res) => {
+  try {
+    const profileId = req.params.id;
+
+    // Find the profile to get files for cleanup
+    const profile = await JobSeeker.findById(profileId);
+    if (!profile) {
+      return res.status(404).json({ success: false, message: "Profile not found" });
     }
 
-    // Update user profile
-    user.userName = name || user.userName;
-    user.email = email || user.email;
-    user.experience = experience || user.experience;
-    user.skills = JSON.parse(skills) || user.skills;
-    user.location = location || user.location;
-    user.phoneNumber = phoneNumber || user.phoneNumber;
-    if (resume) user.resume = resume;
-    if (profilePicture) user.profilePicture = profilePicture;
+    if (profile.resume) {
+      const resumePath = path.join(uploadsDir, profile.resume);
+      if (fs.existsSync(resumePath)) fs.unlinkSync(resumePath);
+    }
 
-    await user.save();
+    if (profile.profilePicture) {
+      const picPath = path.join(uploadsDir, profile.profilePicture);
+      if (fs.existsSync(picPath)) fs.unlinkSync(picPath);
+    }
 
-    res.status(200).json({ success: true, message: 'Profile updated successfully', jobSeeker: user });
-  } catch (err) {
-    console.error('Profile update error:', err);
-    res.status(500).json({ success: false, message: 'Server error', error: err.message });
+    await JobSeeker.findByIdAndDelete(profileId);
+
+    res.json({ success: true, message: "Profile deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting profile:", error);
+    res.status(500).json({ success: false, message: "Server error" });
   }
 });
 

@@ -3,7 +3,7 @@ import "./Recruit.css";
 import Footer from "./Footer";
 import { FaUserCog, FaProjectDiagram, FaBinoculars, FaRegEye, FaClipboardCheck } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer"; // Import hook
+import { useInView } from "react-intersection-observer"; 
 
 const processSteps = [
   {
@@ -34,10 +34,9 @@ const processSteps = [
 ];
 
 const RecruitmentProcess = () => {
-  // Use the intersection observer to detect visibility
   const { ref, inView } = useInView({
-    triggerOnce: false, // Set to false so the animation triggers each time it comes into view
-    threshold: 0.2, // Trigger when 20% of the section is in view
+    triggerOnce: false, 
+    threshold: 0.2,
   });
 
   return (
@@ -50,10 +49,10 @@ const RecruitmentProcess = () => {
               className="process-card"
               key={index}
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }} // Trigger animation when section is in view
+              animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }} 
               transition={{
                 duration: 0.5,
-                delay: index * 0.2, // Stagger delay
+                delay: index * 0.2, 
                 ease: "easeOut",
               }}
             >
