@@ -80,6 +80,17 @@ router.get('/profiles/all', async (req, res) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
+router.get("/profiles/:id", async (req, res) => {
+  try {
+    const profile = await Profile.findById(req.params.id);
+    if (!profile) return res.status(404).json({ success: false, message: "Profile not found" });
+
+    res.json({ success: true, profile });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
 router.delete('/profiles/delete/:id', async (req, res) => {
   try {
     const profileId = req.params.id;
