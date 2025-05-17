@@ -7,7 +7,6 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "../CSS/Auth.css";
 import Footer from "../Home/Footer";
 
-
 const Login = () => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -26,13 +25,10 @@ const Login = () => {
         setLoading(false);
         if (res.data.success) {
           const { userName, role, email, phone } = res.data.user;
-
           const user = { userName, role, email, phone };
           localStorage.setItem("user", JSON.stringify(user));
-
           toast.success("Login successful!", { autoClose: 2000 });
 
-          // Redirect based on role
           const targetPath = userName === "admin" ? "/postjob" : "/dashboard";
           window.location.href = targetPath;
         } else {
@@ -51,59 +47,60 @@ const Login = () => {
 
   return (
     <>
-    <div className="auth-container">
-      <ToastContainer position="top-right" />
-      <div className="auth-form">
-        <h2 className="auth-title">Login to Your Account</h2>
-        <form onSubmit={handleLogin}>
-          <div className="form-group">
-            <label>Email or Username:</label>
-            <input
-              type="text"
-              placeholder="Enter email or username"
-              value={identifier}
-              onChange={(e) => setIdentifier(e.target.value)}
-              className="input-field"
-              required
-            />
-          </div>
-
-          <div className="form-group password-group">
-            <label>Password:</label>
-            <div className="password-input-wrapper">
+      <div className="auth-container login-page">
+        <ToastContainer position="top-right" />
+        <div className="auth-form">
+          <h2 className="auth-title">Login to Your Account</h2>
+          <form onSubmit={handleLogin}>
+            <div className="input-group">
+              <label htmlFor="identifier">Email or Username</label>
               <input
-                type={passwordVisible ? "text" : "password"} 
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="input-field password-input"
+                type="text"
+                id="identifier"
+                placeholder="Enter email or username"
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
                 required
               />
-              <span
-                className="password-toggle-icon"
-                onClick={togglePasswordVisibility}
-              >
-                {passwordVisible ? <FaEyeSlash /> : <FaEye />} 
-              </span>
             </div>
+
+            <div className="input-group">
+              <label htmlFor="password">Password</label>
+              <div className="password-wrapper">
+                <input
+                  type={passwordVisible ? "text" : "password"}
+                  id="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <span
+                  className="toggle-password"
+                  onClick={togglePasswordVisibility}
+                  title={passwordVisible ? "Hide password" : "Show password"}
+                >
+                  {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
+            </div>
+
+            <button type="submit" className="auth-btn" disabled={loading}>
+              {loading ? "Logging in..." : "Login"}
+            </button>
+          </form>
+
+          <div className="account-message">
+            <p>
+              Don’t have an account?{" "}
+              <span onClick={() => navigate("/signup")} className="link-text">
+                Sign Up here
+              </span>
+            </p>
           </div>
-
-          <button type="submit" className="auth-btn" disabled={loading}>
-            {loading ? "Logging In..." : "Login"}
-          </button>
-        </form>
-
-        <div className="account-message">
-          <p>
-            Don't have an account?{" "}
-            <span onClick={() => navigate("/signup")} className="link-text">
-              Sign Up here
-            </span>
-          </p>
         </div>
       </div>
-    </div>
-    <Footer/>
+      <Footer />
     </>
   );
 };

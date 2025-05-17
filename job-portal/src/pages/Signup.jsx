@@ -21,7 +21,7 @@ const SignUp = () => {
     const formData = {
       userName,
       email,
-      phoneNumber, 
+      phoneNumber,
       password,
       role: 'user'
     };
@@ -41,88 +41,88 @@ const SignUp = () => {
       });
   };
 
-  // Toggle password visibility
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
   return (
     <>
-    <div className="auth-container">
-      <ToastContainer position="top-right" />
-      <div className="auth-form">
-        <h2 className="auth-title">Create Your Account</h2>
-        <form onSubmit={handleSignUp}>
-          <div>
-            <label>Username:</label>
-            <input 
-              type="text" 
-              placeholder="Enter your username" 
-              value={userName} 
-              onChange={(e) => setUserName(e.target.value)} 
-              className="input-field" 
-              required 
-            />
-          </div>
-
-          <div>
-            <label>Email:</label>
-            <input 
-              type="email" 
-              placeholder="Enter your email" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
-              className="input-field" 
-              required 
-            />
-          </div>
-
-          <div>
-            <label>Phone Number:</label>
-            <input 
-              type="tel" 
-              placeholder="Enter your phone number" 
-              value={phoneNumber} 
-              onChange={(e) => setPhoneNumber(e.target.value)} 
-              className="input-field" 
-              required 
-            />
-          </div>
-
-          <div className="password-group">
-            <label>Password:</label>
-            <div className="password-input-wrapper">
-              <input 
-                type={passwordVisible ? "text" : "password"}
-                placeholder="Enter your password" 
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)} 
-                className="input-field password-input" 
-                required 
+      <div className="auth-container">
+        <ToastContainer position="top-right" />
+        <div className="auth-form">
+          <h2 className="auth-title">Create Your Account</h2>
+          <form onSubmit={handleSignUp}>
+            <div className="input-group">
+              <label htmlFor="username">Username</label>
+              <input
+                type="text"
+                id="username"
+                placeholder="Enter your username"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                required
               />
-              <span 
-                className="password-toggle-icon" 
-                onClick={togglePasswordVisibility}
-              >
-                {passwordVisible ? <FaEyeSlash /> : <FaEye />} 
-              </span>
             </div>
+
+            <div className="input-group">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="input-group">
+              <label htmlFor="phone">Phone Number</label>
+              <input
+                type="tel"
+                id="phone"
+                placeholder="Enter your phone number"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="input-group">
+              <label htmlFor="password">Password</label>
+              <div className="password-wrapper">
+                <input
+                  type={passwordVisible ? "text" : "password"}
+                  id="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <span
+                  className="toggle-password"
+                  onClick={togglePasswordVisibility}
+                  title={passwordVisible ? "Hide password" : "Show password"}
+                >
+                  {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
+            </div>
+
+            <button type="submit" className="auth-btn">Sign Up</button>
+          </form>
+
+          <div className="account-message">
+            <p>
+              Already have an account?{" "}
+              <span onClick={() => navigate('/login')} className="link-text">
+                Login here
+              </span>
+            </p>
           </div>
-
-          <button type="submit" className="auth-btn">Sign Up</button>
-        </form>
-
-        <div className="account-message">
-          <p>
-            Already have an account?{" "}
-            <span onClick={() => navigate('/login')} className="link-text">
-              Login here
-            </span>
-          </p>
         </div>
       </div>
-    </div>
-    <Footer/>
+      <Footer />
     </>
   );
 };

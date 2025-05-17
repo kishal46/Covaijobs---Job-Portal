@@ -14,21 +14,21 @@ const AllProfiles = () => {
   const [deletingIds, setDeletingIds] = useState([]);
   const [animatedIds, setAnimatedIds] = useState([]);
 
+  // Get username from localStorage
   useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
-    console.log("Loaded username from localStorage:", storedUsername);
-    setUsername(storedUsername || "");
+    const user = JSON.parse(localStorage.getItem("user"));
+    setUsername(user?.userName || "");
   }, []);
 
+  // Fetch all profiles
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
-        const { data } = await axios.get(
-          "http://localhost:3001/jobseeker/profiles/all"
-        );
+        const { data } = await axios.get("http://localhost:3001/jobseeker/profiles/all");
         if (data.success) {
           setProfiles(data.profiles);
           setFilteredProfiles(data.profiles);
+
           data.profiles.forEach((profile, idx) => {
             setTimeout(() => {
               setAnimatedIds((prev) => [...prev, profile._id]);
@@ -46,6 +46,7 @@ const AllProfiles = () => {
     fetchProfiles();
   }, []);
 
+  // Handle delete profile
   const handleDelete = async (id, e) => {
     e.stopPropagation();
     if (!window.confirm("Are you sure you want to delete this profile?")) return;
@@ -66,6 +67,7 @@ const AllProfiles = () => {
     }
   };
 
+  // Filter profiles
   useEffect(() => {
     const ft = filterText.trim().toLowerCase();
     if (!ft) {
@@ -91,15 +93,26 @@ const AllProfiles = () => {
     text?.charAt(0).toUpperCase() + text?.slice(1).toLowerCase();
 
   if (loading)
-    return <p className="text-center mt-5 fs-5">Loading profiles...</p>;
+    return (
+      <div className="text-center mt-5">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+
   if (error)
     return <p className="text-danger text-center mt-5 fs-5">{error}</p>;
 
   return (
     <div className="container my-4">
-      <h2 className="mb-4 text-center text-primary fw-bold">
-        Job Seeker Profiles
-      </h2>
+      <h2 className="mb-4 text-center text-primary fw-bold">Job Seeker Profiles</h2>
+
+      {username && (
+        <p className="text-end text-muted small">
+          Logged in as: <strong>{capitalize(username)}</strong>
+        </p>
+      )}
 
       <div className="search-wrapper mb-4 position-relative">
         <input
@@ -129,7 +142,7 @@ const AllProfiles = () => {
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="profile-card card shadow-sm border-0 rounded-4 p-3 position-relative">
-                  {(username === "admin" || username === profile.username) && (
+                  {username.trim().toLowerCase() === "admin" && (
                     <button
                       className="delete-icon"
                       onClick={(e) => handleDelete(profile._id, e)}
@@ -149,7 +162,9 @@ const AllProfiles = () => {
                           {profile.employeeCode || ""}
                         </span>
                       </h5>
-                      <p className="mb-1 fw-medium">{profile.experience || "0"} years</p>
+                      <p className="mb-1 fw-medium">
+                        {profile.experience || "0"} years
+                      </p>
 
                       <div className="d-flex flex-wrap gap-2 mb-2">
                         {profile.skills?.map((skill, idx) => (
@@ -166,12 +181,12 @@ const AllProfiles = () => {
                         {profile.description?.slice(0, 150) || "No description available..."}
                       </p>
 
-                      <a
-                        href={`mailto:${profile.email}`}
+                     <a
+                        href={`mailto:kchannel022@gmail.com?subject=Hire ${capitalize(profile.name)}&body=Hello Admin,%0D%0A%0D%0AI am interested in hiring ${capitalize(profile.name)}.%0D%0A%0D%0APlease provide further details.`}
                         className="small text-primary text-decoration-none"
                       >
-                        <i className="bi bi-person-plus me-1"></i>Hire{" "}
-                        {capitalize(profile.name?.split(" ")[0])}
+                        <i className="bi bi-person-plus me-1"></i>
+                        Hire {capitalize(profile.name?.split(" ")[0])}
                       </a>
                     </div>
 
@@ -181,7 +196,11 @@ const AllProfiles = () => {
                           src={`http://localhost:3001/uploads/${profile.profilePicture}`}
                           alt="Profile"
                           className="rounded-circle border border-2 border-primary mb-3"
-                          style={{ width: "80px", height: "80px", objectFit: "cover" }}
+                          style={{
+                            width: "80px",
+                            height: "80px",
+                            objectFit: "cover",
+                          }}
                         />
                       ) : (
                         <div className="profile-placeholder mb-3">
