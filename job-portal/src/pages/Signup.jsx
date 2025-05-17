@@ -26,7 +26,7 @@ const SignUp = () => {
       role: 'user'
     };
 
-    axios.post('http://localhost:3001/signup', formData)
+    axios.post('https://appsail-50027637458.development.catalystappsail.in/signup', formData)
       .then(res => {
         if (res.data.success) {
           toast.success("Sign Up Successful!", { autoClose: 2000 });
