@@ -14,7 +14,6 @@ const AllProfiles = () => {
   const [deletingIds, setDeletingIds] = useState([]);
   const [animatedIds, setAnimatedIds] = useState([]);
 
-  // Get username from localStorage
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     setUsername(user?.userName || "");
@@ -24,7 +23,9 @@ const AllProfiles = () => {
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3001/jobseeker/profiles/all");
+        const { data } = await axios.get(
+          "http://localhost:3001/jobseeker/profiles/all"
+        );
         if (data.success) {
           setProfiles(data.profiles);
           setFilteredProfiles(data.profiles);
@@ -130,6 +131,8 @@ const AllProfiles = () => {
       ) : (
         <div className="row gy-4">
           {filteredProfiles.map((profile, index) => {
+            console.log("Profile description:", profile.description); // Debug log
+
             const isDeleting = deletingIds.includes(profile._id);
             const isAnimated = animatedIds.includes(profile._id);
 
@@ -177,11 +180,12 @@ const AllProfiles = () => {
                         ))}
                       </div>
 
-                      <p className="small text-muted mb-2">
-                        {profile.description?.slice(0, 150) || "No description available..."}
+                      {/* Description rendering with fallback */}
+                      <p className="small text-muted mb-2" style={{ color: "black" }}>
+                        {profile.discription || "No description available..."}
                       </p>
 
-                     <a
+                      <a
                         href={`mailto:kchannel022@gmail.com?subject=Hire ${capitalize(profile.name)}&body=Hello Admin,%0D%0A%0D%0AI am interested in hiring ${capitalize(profile.name)}.%0D%0A%0D%0APlease provide further details.`}
                         className="small text-primary text-decoration-none"
                       >

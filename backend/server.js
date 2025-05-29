@@ -45,7 +45,6 @@ const storage = multer.diskStorage({
   },
 });
 
-// File type validation
 const fileFilter = (req, file, cb) => {
   const allowedTypes = ['.jpg', '.jpeg', '.png', '.pdf'];
   const ext = path.extname(file.originalname).toLowerCase();
@@ -56,11 +55,8 @@ const fileFilter = (req, file, cb) => {
   cb(null, true);
 };
 
-const upload = multer({ storage, fileFilter });
-
-// Import routes
 const authRoutes = require('./routes/auth');
-const profileRoutes = require('./routes/profile'); // ✅ Only this one
+const profileRoutes = require('./routes/profile');
 const jobRoutes = require('./routes/jobs');
 const applyRoute = require('./routes/applyRoute');
 const contactRoutes = require('./routes/contactRoute');

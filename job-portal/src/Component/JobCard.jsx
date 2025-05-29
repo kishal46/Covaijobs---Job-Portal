@@ -18,7 +18,6 @@ const JobList = ({ refresh }) => {
   const [isApplying, setIsApplying] = useState(false);
   const navigate = useNavigate();
 
-  // Get user from localStorage with correct key userName (capital N)
   const user = JSON.parse(localStorage.getItem('user'));
   const username = user?.userName || '';
 

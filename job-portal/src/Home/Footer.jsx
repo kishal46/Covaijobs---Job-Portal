@@ -22,8 +22,8 @@ const Footer = () => {
           </div>
 
           <div className="col-md-4 mb-3 mb-md-0">
-            <h6 className="fw-bold">Quick Links</h6>
-            <ul className="list-unstyled small">
+            <h6 className="fw-bold mt-2">Quick Links</h6>
+            <ul className="list-unstyled small mt-3">
               <li><Link to="/" className="text-white">Home</Link></li>
               <li><Link to="/about" className="text-white">About Us</Link></li>
               <li><Link to="/signup" className="text-white">Sign Up</Link></li>

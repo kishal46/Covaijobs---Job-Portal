@@ -23,55 +23,65 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // POST route for profile submission
-router.post("/profile/details", upload.fields([
-  { name: "resume", maxCount: 1 },
-  { name: "profilePicture", maxCount: 1 },
-]), async (req, res) => {
-  try {
-    const {
-      userId,
-      name,
-      email,
-      experience,
-      skills,
-      location,
-      phoneNumber,
-    } = req.body;
+router.post(
+  "/profile/details",
+  upload.fields([
+    { name: "resume", maxCount: 1 },
+    { name: "profilePicture", maxCount: 1 },
+  ]),
+  async (req, res) => {
+    try {
+      const {
+        userId,
+        name,
+        email,
+        experience,
+        skills,
+        location,
+        phoneNumber,
+        discription,
+      } = req.body;
 
-    if (!userId || !name || !email) {
-      return res.status(400).json({ success: false, message: "Missing required fields" });
+      if (!userId || !name || !email) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Missing required fields" });
+      }
+
+      const resume = req.files?.resume ? req.files.resume[0].filename : null;
+      const profilePicture = req.files?.profilePicture
+        ? req.files.profilePicture[0].filename
+        : null;
+
+      const jobSeekerData = {
+        userId,
+        name,
+        email,
+        experience,
+        skills: skills ? JSON.parse(skills) : [],
+        location,
+        phoneNumber,
+        resume,
+        profilePicture,
+        discription, // ✅ Now included
+      };
+
+      const jobSeeker = await JobSeeker.findOneAndUpdate(
+        { userId },
+        jobSeekerData,
+        { new: true, upsert: true }
+      );
+
+      res.json({ success: true, jobSeeker });
+    } catch (error) {
+      console.error("Profile save error:", error);
+      res.status(500).json({ success: false, message: "Server error" });
     }
-
-    const resume = req.files?.resume ? req.files.resume[0].filename : null;
-    const profilePicture = req.files?.profilePicture ? req.files.profilePicture[0].filename : null;
-
-    const jobSeekerData = {
-      userId,
-      name,
-      email,
-      experience,
-      skills: skills ? JSON.parse(skills) : [],
-      location,
-      phoneNumber,
-      resume,
-      profilePicture,
-    };
-
-    const jobSeeker = await JobSeeker.findOneAndUpdate(
-      { userId },
-      jobSeekerData,
-      { new: true, upsert: true }
-    );
-
-    res.json({ success: true, jobSeeker });
-  } catch (error) {
-    console.error("Profile save error:", error);
-    res.status(500).json({ success: false, message: "Server error" });
   }
-});
+);
 
-
-router.get('/profiles/all', async (req, res) => {
+// GET all profiles
+router.get("/profiles/all", async (req, res) => {
   try {
     const profiles = await JobSeeker.find({});
     res.json({ success: true, profiles });
@@ -80,25 +90,33 @@ router.get('/profiles/all', async (req, res) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
+
+// GET profile by ID
 router.get("/profiles/:id", async (req, res) => {
   try {
-    const profile = await Profile.findById(req.params.id);
-    if (!profile) return res.status(404).json({ success: false, message: "Profile not found" });
+    const profile = await JobSeeker.findById(req.params.id); // ✅ Fixed model name
+    if (!profile)
+      return res
+        .status(404)
+        .json({ success: false, message: "Profile not found" });
 
     res.json({ success: true, profile });
   } catch (error) {
+    console.error("Error fetching profile by ID:", error);
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
 
-router.delete('/profiles/delete/:id', async (req, res) => {
+// DELETE profile by ID
+router.delete("/profiles/delete/:id", async (req, res) => {
   try {
     const profileId = req.params.id;
 
-    // Find the profile to get files for cleanup
     const profile = await JobSeeker.findById(profileId);
     if (!profile) {
-      return res.status(404).json({ success: false, message: "Profile not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Profile not found" });
     }
 
     if (profile.resume) {

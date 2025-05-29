@@ -55,5 +55,25 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ success: false, message: 'Login failed' });
   }
 });
+// In your Express backend
+router.post("/google-login", async (req, res) => {
+  const { email, name, picture } = req.body;
+
+  try {
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      // Create new user
+      user = new User({ userName: name, email, profilePic: picture, role: "candidate" });
+      await user.save();
+    }
+
+    res.json({ success: true, user });
+  } catch (err) {
+    console.error(err);
+    res.json({ success: false, message: "Google login failed" });
+  }
+});
+
 
 module.exports = router;

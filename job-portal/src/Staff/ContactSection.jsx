@@ -52,7 +52,7 @@ const ContactSection = () => {
   };
 
   return (
-    <div className="container my-5 gap-2">
+    <div className="container my-5 gap-4">
       <div className="row align-items-start">
         <motion.div
           className="col-md-6"
@@ -78,9 +78,8 @@ const ContactSection = () => {
           </button>
         </motion.div>
 
-        {/* Right Section with motion */}
         <motion.div
-          className="col-md-6"
+          className="col-md-6 p-4"
           initial={{ opacity: 0, x: 100 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}

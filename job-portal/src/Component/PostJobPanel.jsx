@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
+// JobForm.jsx
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../CSS/JobForm.css';
 
-const JobForm = ({ username }) => {
+const JobForm = () => {
+  // Simulate getting username from localStorage after login
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('username');
+    if (storedUser) setUsername(storedUser);
+  }, []);
+
   const [formData, setFormData] = useState({
     title: '',
     company: '',
@@ -18,13 +27,19 @@ const JobForm = ({ username }) => {
   const [error, setError] = useState(null);
   const [successMsg, setSuccessMsg] = useState('');
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!username) {
+      setError('You must be logged in to post a job.');
+      return;
+    }
+
     setLoading(true);
     setError(null);
     setSuccessMsg('');
@@ -36,8 +51,7 @@ const JobForm = ({ username }) => {
       };
 
       const response = await axios.post('http://localhost:3001/jobs/add', jobData);
-      console.log('Job posted successfully:', response.data);
-
+      setSuccessMsg('Job posted successfully! Redirecting...');
       setFormData({
         title: '',
         company: '',
@@ -47,129 +61,49 @@ const JobForm = ({ username }) => {
         description: '',
         experience: '',
       });
-
-      setSuccessMsg('Job posted successfully! Redirecting...');
-
-      setTimeout(() => {
-        navigate('/currentjobs');
-      }, 1500);
-
+      setTimeout(() => navigate('/currentjobs'), 1500);
     } catch (error) {
-      console.error('Error posting job:', error.response || error);
-
       if (error.response) {
-        setError(`Server Error: ${error.response.data.message || 'There was an issue posting the job.'}`);
+        setError(error.response.data.error || 'Server error occurred.');
       } else if (error.request) {
-        setError('Network Error: Please check your connection or the server status.');
+        setError('Network error. Please check your connection.');
       } else {
-        setError(`Unexpected Error: ${error.message}`);
+        setError('Unexpected error: ' + error.message);
       }
     } finally {
       setLoading(false);
     }
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault(); 
-      handleSubmit(e);
-    }
-  };
-
   return (
     <div className="job-form-container">
-      <h2 className="form-title">Post New Job</h2>
+      <h2>Post New Job</h2>
       <form onSubmit={handleSubmit} className="job-form">
-        <div className="form-grid">
-          <div className="form-group">
-            <label>Job Title</label>
-            <input 
-              name="title" 
-              value={formData.title} 
-              onChange={handleChange} 
-              onKeyPress={handleKeyPress} 
-              required 
-            />
-          </div>
-          <div className="form-group">
-            <label>Company Name</label>
-            <input 
-              name="company" 
-              value={formData.company} 
-              onChange={handleChange} 
-              onKeyPress={handleKeyPress} 
-              required 
-            />
-          </div>
-          <div className="form-group">
-            <label>Location</label>
-            <input 
-              name="location" 
-              value={formData.location} 
-              onChange={handleChange} 
-              onKeyPress={handleKeyPress} 
-              required 
-            />
-          </div>
-          <div className="form-group">
-            <label>Job Type</label>
-            <select 
-              name="type" 
-              value={formData.type} 
-              onChange={handleChange} 
-              onKeyPress={handleKeyPress} 
-              required
-            >
-              <option value="">Select Job Type</option>
-              <option value="Full-Time">Full-Time</option>
-              <option value="Part-Time">Part-Time</option>
-              <option value="Internship">Internship</option>
-              <option value="Contract">Contract</option>
-              <option value="Freelance">Freelance</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Salary</label>
-            <input 
-              name="salary" 
-              value={formData.salary} 
-              onChange={handleChange} 
-              onKeyPress={handleKeyPress} 
-              required 
-            />
-          </div>
-          <div className="form-group">
-            <label>Experience Required</label>
-            <input 
-              name="experience" 
-              value={formData.experience} 
-              onChange={handleChange} 
-              placeholder="Please enter experience" 
-              onKeyPress={handleKeyPress} 
-              required 
-            />
-          </div>
-          <div className="form-group full-width">
-            <label>Job Description (300 words)</label>
-            <textarea 
-              name="description" 
-              value={formData.description} 
-              onChange={handleChange} 
-              rows="4" 
-              placeholder="Provide a detailed job description. Please ensure it is exactly 300 words."
-              onKeyPress={handleKeyPress} 
-              required
-            ></textarea>
-          </div>
-        </div>
-
-        {loading && <p className="loading-text">Posting Job...</p>}
-        {error && <p className="error-text">{error}</p>}
-        {successMsg && <p className="success-text">{successMsg}</p>}
-
-        <div className="form-submit">
-          <button type="submit" disabled={loading}>Post Job</button>
-        </div>
+        <input name="title" placeholder="Job Title" value={formData.title} onChange={handleChange} required />
+        <input name="company" placeholder="Company Name" value={formData.company} onChange={handleChange} required />
+        <input name="location" placeholder="Location" value={formData.location} onChange={handleChange} required />
+        <select name="type" value={formData.type} onChange={handleChange} required>
+          <option value="">Select Job Type</option>
+          <option value="Full-Time">Full-Time</option>
+          <option value="Part-Time">Part-Time</option>
+          <option value="Internship">Internship</option>
+          <option value="Contract">Contract</option>
+          <option value="Freelance">Freelance</option>
+        </select>
+        <input name="salary" placeholder="Salary" value={formData.salary} onChange={handleChange} required />
+        <input name="experience" placeholder="Experience Required" value={formData.experience} onChange={handleChange} required />
+        <textarea
+          name="description"
+          placeholder="Job Description (300 words)"
+          value={formData.description}
+          onChange={handleChange}
+          rows="4"
+          required
+        />
+        {loading && <p>Posting job...</p>}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {successMsg && <p style={{ color: 'green' }}>{successMsg}</p>}
+        <button type="submit" disabled={loading}>Post Job</button>
       </form>
     </div>
   );

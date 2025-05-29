@@ -1,11 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { FaUsers, FaBriefcase, FaCertificate } from "react-icons/fa"; // Icons
+import { FaUsers, FaBriefcase, FaCertificate } from "react-icons/fa"; 
 import "./AboutUs.css";
 import aboutImage from "../Images/why.webp";
-import LogoSlider from "./Logo";
-import Footer from "./Footer";
+
 
 const AboutUs = () => {
   const points = [
